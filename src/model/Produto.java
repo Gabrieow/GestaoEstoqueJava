@@ -85,7 +85,42 @@ public class Produto {
                 ", preco=" + preco +
                 ", categoria='" + categoria + '\'' +
                 ", quantidadeEstoque=" + quantidadeEstoque +
-                ", fornecedor=" + fornecedor +
+                ", fornecedor=" + (fornecedor != null ? fornecedor.getNome() : "Sem fornecedor") +
                 '}';
+    }
+
+    public void atualizarPreco(double novoPreco) {
+        if (novoPreco > 0) {
+            this.preco = novoPreco;
+        } else {
+            System.out.println("Preço inválido.");
+        }
+    }
+
+    public void atualizarPreco(double novoPreco, boolean promocao) {
+        if (promocao) {
+            System.out.println("Preço atualizado com promoção!");
+        } else {
+            System.out.println("Preço atualizado normalmente.");
+        }
+        atualizarPreco(novoPreco);
+    }
+
+    public void adicionarEstoque(int quantidade) {
+        if (quantidade > 0) {
+            this.quantidadeEstoque += quantidade;
+        } else {
+            System.out.println("Quantidade inválida para adicionar.");
+        }
+    }
+
+    public void removerEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            System.out.println("Quantidade inválida para remover.");
+        } else if (quantidade > this.quantidadeEstoque) {
+            System.out.println("Estoque insuficiente.");
+        } else {
+            this.quantidadeEstoque -= quantidade;
+        }
     }
 }
