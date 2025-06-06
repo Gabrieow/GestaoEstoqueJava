@@ -39,15 +39,15 @@ public class Fornecedor extends Pessoa implements IRegistravel {
 
     @Override
     public String exibirDados() {
-        return "Fornecedor{" +
-                "id=" + id +
-                ", cnpj='" + cnpj + '\'' +
-                ", razaoSocial='" + razaoSocial + '\'' +
-                ", nome='" + getNome() + '\'' +
-                ", telefone='" + getTelefone() + '\'' +
-                ", endereco='" + getEndereco() + '\'' +
-                '}';
-        
+        return String.format(
+            "Fornecedor #%d\nCNPJ: %s\nRazão Social: %s\nNome: %s\nTelefone: %s\nEndereço: %s\n",
+            id,
+            cnpj,
+            razaoSocial,
+            getNome(),
+            getTelefone(),
+            getEndereco()
+        );
     }
 
     @Override

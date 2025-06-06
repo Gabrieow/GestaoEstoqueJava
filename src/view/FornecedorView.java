@@ -11,12 +11,12 @@ public class FornecedorView {
     private FornecedorController controller;
     private Scanner scanner;
 
-    public FornecedorView() {
-        controller = new FornecedorController();
-        scanner = new Scanner(System.in);
+    public FornecedorView(FornecedorController controller) {
+        this.controller = controller;
+        this.scanner = new Scanner(System.in);
     }
 
-    public void menu() {
+    public void exibirMenu() {
         int opcao = 0;
 
         do {
@@ -39,8 +39,6 @@ public class FornecedorView {
                 default -> System.out.println("Opção inválida!");
             }
         } while (opcao != 0);
-
-        scanner.close();
     }
 
     private void cadastrarFornecedor() {

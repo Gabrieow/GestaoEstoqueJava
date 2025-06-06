@@ -14,10 +14,10 @@ public class ProdutoView {
     private FornecedorController fornecedorController;
     private Scanner scanner;
 
-    public ProdutoView() {
-        produtoController = new ProdutoController();
-        fornecedorController = new FornecedorController();
-        scanner = new Scanner(System.in);
+    public ProdutoView(ProdutoController produtoController, FornecedorController fornecedorController) {
+        this.produtoController = produtoController;
+        this.fornecedorController = fornecedorController;
+        this.scanner = new Scanner(System.in);
     }
 
     public void exibirMenu() {

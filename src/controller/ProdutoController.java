@@ -55,7 +55,7 @@ public class ProdutoController {
         return produtos;
     }
 
-    private Produto buscarPorId(int id) {
+    public Produto buscarPorId(int id) {
         for (Produto p : produtos) {
             if (p.getId() == id) {
                 return p;
