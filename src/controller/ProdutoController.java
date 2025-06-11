@@ -3,15 +3,14 @@ package controller;
 import model.Fornecedor;
 import model.Produto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoController {
 
     private List<Produto> produtos;
 
-    public ProdutoController() {
-        this.produtos = new ArrayList<>();
+    public ProdutoController(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     public void cadastrarProduto(Produto produto) throws Exception {

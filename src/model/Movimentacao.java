@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Movimentacao implements Serializable {
-    private static final long serialVersionUID = 1L;
+
     private int id;
     private TipoMovimentacao tipo;
     private int quantidade;
     private LocalDate data;
-    private Produto produto;
+    private Produto produto; // salvar lista de produtos
+    // salvar lista de fornecedor
 
     public Movimentacao(int id, TipoMovimentacao tipo, int quantidade, LocalDate data, Produto produto) {
         this.id = id;

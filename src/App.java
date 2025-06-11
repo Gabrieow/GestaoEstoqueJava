@@ -1,18 +1,25 @@
 import controller.FornecedorController;
 import controller.MovimentacaoController;
 import controller.ProdutoController;
+import model.Fornecedor;
+import model.Produto;
 import view.FornecedorView;
 import view.MovimentacaoView;
 import view.ProdutoView;
 import util.DataSeeder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
 
-        FornecedorController fornecedorController = new FornecedorController();
-        ProdutoController produtoController = new ProdutoController();
+        List<Fornecedor> fornecedores = new ArrayList<>();
+        List<Produto> produtos = new ArrayList<>();
+
+        FornecedorController fornecedorController = new FornecedorController(fornecedores); // fazer dao pra fornecedor e produto pra nao precisar instanciar as arraylist ali em cima
+        ProdutoController produtoController = new ProdutoController(produtos);
         MovimentacaoController movimentacaoController = new MovimentacaoController();
 
         DataSeeder.popularDadosIniciais(fornecedorController, produtoController);

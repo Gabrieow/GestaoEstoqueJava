@@ -1,6 +1,6 @@
 package model;
 
-public class Fornecedor extends Pessoa implements IRegistravel {
+public class Fornecedor extends Pessoa implements IRegistravel { // remoer implementaçao da interface pessoa e criar FornecedorDAO para salvar e carregar fornecedores
 
     private int id;
     private String cnpj;

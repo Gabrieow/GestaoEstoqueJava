@@ -12,9 +12,6 @@ public class MovimentacaoController {
 
     public MovimentacaoController() {
         movimentacoes = MovimentacaoDAO.carregarMovimentacoes();
-        if (movimentacoes == null) {
-            movimentacoes = new ArrayList<>();
-        }
     }
 
     public String cadastrarMovimentacao(Movimentacao movimentacao) {
@@ -51,6 +48,7 @@ public class MovimentacaoController {
                 }
 
                 MovimentacaoDAO.salvarMovimentacoes(movimentacoes);
+                // adicionar metodo de atualizar estoque
                 return "Movimentação removida com sucesso. ID: " + movimentacao.getId();
             } else {
                 return "Movimentação não encontrada.";

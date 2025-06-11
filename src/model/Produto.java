@@ -1,7 +1,9 @@
 package model;
 
-public class Produto {
+import java.io.Serializable;
 
+public class Produto implements Serializable { // criar produtoDAO pra salvar e carregar produtos inseridos pelo usuario anteriormente
+    
     private int id;
     private String nome;
     private String descricao;

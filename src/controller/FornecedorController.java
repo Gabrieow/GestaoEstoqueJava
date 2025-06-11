@@ -6,11 +6,11 @@ import java.util.List;
 
 import factory.FornecedorFactory;
 
-public class FornecedorController {
+public class FornecedorController { // implementar interface aqui ao inves de implementar lá em fornecedor
     private List<Fornecedor> fornecedores;
 
-    public FornecedorController() {
-        this.fornecedores = new ArrayList<>();
+    public FornecedorController(List<Fornecedor> fornecedores) {
+        this.fornecedores = fornecedores;
     }
 
     public String registrarFornecedor(String nome, String telefone, String endereco, int id, String cnpj, String razaoSocial) {
