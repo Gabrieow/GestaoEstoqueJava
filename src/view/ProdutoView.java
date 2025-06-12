@@ -32,8 +32,8 @@ public class ProdutoView {
             System.out.println("0 - Voltar ao menu principal");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa buffer
-
+            scanner.nextLine();
+            
             switch (opcao) {
                 case 1 -> cadastrarProduto();
                 case 2 -> atualizarProduto();
@@ -74,16 +74,16 @@ public class ProdutoView {
 
         Fornecedor fornecedor = escolherFornecedor();
         if (fornecedor == null) {
-            System.out.println("Cadastro cancelado. É necessário escolher um fornecedor.");
+            System.out.println("Cadastro cancelado. É necessário escolher um fornecedor válido.");
             return;
         }
 
         Produto produto = new Produto(id, nome, descricao, preco, categoria, quantidade, fornecedor);
         try {
-            produtoController.cadastrarProduto(produto);
-            System.out.println("Produto cadastrado com sucesso!");
+            String resultado = produtoController.cadastrarProduto(produto);
+            System.out.println(resultado);
         } catch (Exception e) {
-            System.out.println("Erro ao cadastrar produto: " + e.getMessage());
+            System.out.println("Erro inesperado ao cadastrar produto: " + e.getMessage());
         }
     }
 
@@ -94,34 +94,40 @@ public class ProdutoView {
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Novo nome: ");
+        Produto produtoExistente = produtoController.buscarPorId(id);
+        if (produtoExistente == null) {
+            System.out.println("Produto com ID " + id + " não encontrado.");
+            return;
+        }
+
+        System.out.print("Novo nome (atual: " + produtoExistente.getNome() + "): ");
         String nome = scanner.nextLine();
 
-        System.out.print("Nova descrição: ");
+        System.out.print("Nova descrição (atual: " + produtoExistente.getDescricao() + "): ");
         String descricao = scanner.nextLine();
 
-        System.out.print("Novo preço: ");
+        System.out.print("Novo preço (atual: " + produtoExistente.getPreco() + "): ");
         double preco = scanner.nextDouble();
         scanner.nextLine();
 
-        System.out.print("Nova categoria: ");
+        System.out.print("Nova categoria (atual: " + produtoExistente.getCategoria() + "): ");
         String categoria = scanner.nextLine();
 
-        System.out.print("Nova quantidade em estoque: ");
+        System.out.print("Nova quantidade em estoque (atual: " + produtoExistente.getQuantidadeEstoque() + "): ");
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
         Fornecedor fornecedor = escolherFornecedor();
         if (fornecedor == null) {
-            System.out.println("Atualização cancelada. É necessário escolher um fornecedor.");
+            System.out.println("Atualização cancelada. É necessário escolher um fornecedor válido.");
             return;
         }
 
         try {
-            produtoController.editarProduto(id, nome, descricao, preco, categoria, quantidade, fornecedor);
-            System.out.println("Produto atualizado com sucesso!");
+            String resultado = produtoController.editarProduto(id, nome, descricao, preco, categoria, quantidade, fornecedor);
+            System.out.println(resultado);
         } catch (Exception e) {
-            System.out.println("Erro ao atualizar produto: " + e.getMessage());
+            System.out.println("Erro inesperado ao atualizar produto: " + e.getMessage());
         }
     }
 
@@ -132,10 +138,10 @@ public class ProdutoView {
         scanner.nextLine();
 
         try {
-            produtoController.deletarProduto(id);
-            System.out.println("Produto excluído com sucesso!");
+            String resultado = produtoController.deletarProduto(id);
+            System.out.println(resultado);
         } catch (Exception e) {
-            System.out.println("Erro ao excluir produto: " + e.getMessage());
+            System.out.println("Erro inesperado ao excluir produto: " + e.getMessage());
         }
     }
 
@@ -169,13 +175,6 @@ public class ProdutoView {
         int idFornecedor = scanner.nextInt();
         scanner.nextLine();
 
-        for (Fornecedor fornecedor : fornecedores) {
-            if (fornecedor.getId() == idFornecedor) {
-                return fornecedor;
-            }
-        }
-
-        System.out.println("Fornecedor não encontrado.");
-        return null;
+        return fornecedorController.buscarFornecedorPorId(idFornecedor);
     }
 }

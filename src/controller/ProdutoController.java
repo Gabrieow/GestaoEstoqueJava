@@ -2,34 +2,44 @@ package controller;
 
 import model.Fornecedor;
 import model.Produto;
-
+import model.ProdutoDAO;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoController {
 
     private List<Produto> produtos;
 
-    public ProdutoController(List<Produto> produtos) {
-        this.produtos = produtos;
+    public ProdutoController() {
+        this.produtos = ProdutoDAO.carregarProdutos();
     }
 
-    public void cadastrarProduto(Produto produto) throws Exception {
+    public void salvarProdutosInternamente() {
+        ProdutoDAO.salvarProdutos(produtos);
+    }
+
+    public String cadastrarProduto(Produto produto) throws Exception {
         if (produto.getFornecedor() == null) {
-            throw new Exception("Fornecedor deve ser informado para cadastrar o produto.");
+            return "Erro: Fornecedor deve ser informado para cadastrar o produto.";
+        }
+        if (produtos.stream().anyMatch(p -> p.getId() == produto.getId())) {
+            return "Erro: Produto com ID " + produto.getId() + " já existe.";
         }
 
         produtos.add(produto);
+        salvarProdutosInternamente();
+        return "Produto cadastrado com sucesso!";
     }
 
-    public void editarProduto(int id, String nome, String descricao, double preco, String categoria, int quantidadeEstoque, Fornecedor fornecedor) throws Exception {
+    public String editarProduto(int id, String nome, String descricao, double preco, String categoria, int quantidadeEstoque, Fornecedor fornecedor) throws Exception {
         Produto produto = buscarPorId(id);
 
         if (produto == null) {
-            throw new Exception("Produto não encontrado.");
+            return "Erro: Produto não encontrado.";
         }
 
         if (fornecedor == null) {
-            throw new Exception("Fornecedor deve ser informado.");
+            return "Erro: Fornecedor deve ser informado.";
         }
 
         produto.setNome(nome);
@@ -38,20 +48,25 @@ public class ProdutoController {
         produto.setCategoria(categoria);
         produto.setQuantidadeEstoque(quantidadeEstoque);
         produto.setFornecedor(fornecedor);
+
+        salvarProdutosInternamente();
+        return "Produto atualizado com sucesso!";
     }
 
-    public void deletarProduto(int id) throws Exception {
+    public String deletarProduto(int id) throws Exception {
         Produto produto = buscarPorId(id);
 
         if (produto == null) {
-            throw new Exception("Produto não encontrado.");
+            return "Erro: Produto não encontrado.";
         }
 
         produtos.remove(produto);
+        salvarProdutosInternamente();
+        return "Produto excluído com sucesso!";
     }
 
     public List<Produto> listarProdutos() {
-        return produtos;
+        return new ArrayList<>(produtos);
     }
 
     public Produto buscarPorId(int id) {

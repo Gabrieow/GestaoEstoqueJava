@@ -2,8 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-public class Produto implements Serializable { // criar produtoDAO pra salvar e carregar produtos inseridos pelo usuario anteriormente
-    
+public class Produto implements Serializable, IGerenciavelEstoque {
+
     private int id;
     private String nome;
     private String descricao;
@@ -37,6 +37,7 @@ public class Produto implements Serializable { // criar produtoDAO pra salvar e 
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
 
+    @Override
     public int getQuantidadeEstoque() { return quantidadeEstoque; }
     public void setQuantidadeEstoque(int quantidadeEstoque) { this.quantidadeEstoque = quantidadeEstoque; }
 
@@ -79,6 +80,7 @@ public class Produto implements Serializable { // criar produtoDAO pra salvar e 
         return "Preço atualizado para R$ " + String.format("%.2f", novoPreco) + " " + status;
     }
 
+    @Override
     public String adicionarEstoque(int quantidade) {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade para adicionar deve ser maior que zero.");
@@ -87,14 +89,15 @@ public class Produto implements Serializable { // criar produtoDAO pra salvar e 
         return "Estoque atualizado. Quantidade atual: " + this.quantidadeEstoque;
     }
 
-    public Boolean removerEstoque(int quantidade) {
+    @Override
+    public String removerEstoque(int quantidade) {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade para remover deve ser maior que zero.");
         }
         if (quantidade > this.quantidadeEstoque) {
-            throw new IllegalArgumentException("Estoque insuficiente. Quantidade disponível: " + this.quantidadeEstoque);
+            return "Erro: Estoque insuficiente. Quantidade disponível: " + this.quantidadeEstoque;
         }
         this.quantidadeEstoque -= quantidade;
-        return true;
+        return "Estoque atualizado. Quantidade atual: " + this.quantidadeEstoque;
     }
 }

@@ -1,6 +1,6 @@
 package model;
 
-public class Fornecedor extends Pessoa implements IRegistravel { // remoer implementaçao da interface pessoa e criar FornecedorDAO para salvar e carregar fornecedores
+public class Fornecedor extends Pessoa {
 
     private int id;
     private String cnpj;
@@ -48,22 +48,6 @@ public class Fornecedor extends Pessoa implements IRegistravel { // remoer imple
             getTelefone(),
             getEndereco()
         );
-    }
-
-    @Override
-    public String registrar() 
-    {
-        return "Fornecedor registrado com sucesso!";
-    }
-
-    @Override
-    public String atualizar() {
-        return "Fornecedor atualizado com sucesso!";
-    }
-
-    @Override
-    public String excluir() {
-        return "Fornecedor excluído com sucesso!";
     }
 
 }

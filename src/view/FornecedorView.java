@@ -57,12 +57,8 @@ public class FornecedorView {
         System.out.print("Razão Social: ");
         String razaoSocial = scanner.nextLine();
 
-        try {
-            controller.registrarFornecedor(nome, telefone, endereco, id, cnpj, razaoSocial);
-            System.out.println("Fornecedor cadastrado com sucesso!");
-        } catch (Exception e) {
-            System.out.println("Erro ao cadastrar fornecedor: " + e.getMessage());
-        }
+        String resultado = controller.registrarFornecedor(nome, telefone, endereco, id, cnpj, razaoSocial);
+        System.out.println(resultado);
     }
 
     private void atualizarFornecedor() {
@@ -71,23 +67,25 @@ public class FornecedorView {
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Novo nome: ");
+        Fornecedor fornecedorExistente = controller.buscarFornecedorPorId(id);
+        if (fornecedorExistente == null) {
+            System.out.println("Fornecedor com ID " + id + " não encontrado.");
+            return;
+        }
+
+        System.out.print("Novo nome (atual: " + fornecedorExistente.getNome() + "): ");
         String nome = scanner.nextLine();
-        System.out.print("Novo telefone: ");
+        System.out.print("Novo telefone (atual: " + fornecedorExistente.getTelefone() + "): ");
         String telefone = scanner.nextLine();
-        System.out.print("Novo endereço: ");
+        System.out.print("Novo endereço (atual: " + fornecedorExistente.getEndereco() + "): ");
         String endereco = scanner.nextLine();
-        System.out.print("Novo CNPJ: ");
+        System.out.print("Novo CNPJ (atual: " + fornecedorExistente.getCnpj() + "): ");
         String cnpj = scanner.nextLine();
-        System.out.print("Nova razão social: ");
+        System.out.print("Nova razão social (atual: " + fornecedorExistente.getRazaoSocial() + "): ");
         String razaoSocial = scanner.nextLine();
 
-        try {
-            controller.atualizarFornecedor(id, nome, telefone, endereco, cnpj, razaoSocial);
-            System.out.println("Fornecedor atualizado com sucesso!");
-        } catch (Exception e) {
-            System.out.println("Erro ao atualizar fornecedor: " + e.getMessage());
-        }
+        String resultado = controller.atualizarFornecedor(id, nome, telefone, endereco, cnpj, razaoSocial);
+        System.out.println(resultado);
     }
 
     private void excluirFornecedor() {
@@ -96,12 +94,8 @@ public class FornecedorView {
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        try {
-            controller.excluirFornecedor(id);
-            System.out.println("Fornecedor excluído com sucesso!");
-        } catch (Exception e) {
-            System.out.println("Erro ao excluir fornecedor: " + e.getMessage());
-        }
+        String resultado = controller.excluirFornecedor(id);
+        System.out.println(resultado);
     }
 
     private void listarFornecedores() {

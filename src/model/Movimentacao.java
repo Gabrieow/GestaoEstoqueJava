@@ -9,8 +9,7 @@ public class Movimentacao implements Serializable {
     private TipoMovimentacao tipo;
     private int quantidade;
     private LocalDate data;
-    private Produto produto; // salvar lista de produtos
-    // salvar lista de fornecedor
+    private Produto produto;
 
     public Movimentacao(int id, TipoMovimentacao tipo, int quantidade, LocalDate data, Produto produto) {
         this.id = id;
@@ -19,7 +18,6 @@ public class Movimentacao implements Serializable {
         this.data = data;
         this.produto = produto;
 
-        atualizarEstoque();
     }
 
     public Produto getProduto() {
@@ -52,18 +50,6 @@ public class Movimentacao implements Serializable {
             data.toString(),
             produto != null ? produto.getNome() : "Produto não informado"
         );
-    }
-
-
-    public void atualizarEstoque() {
-        if (tipo == TipoMovimentacao.ENTRADA) {
-            produto.adicionarEstoque(quantidade);
-        } else if (tipo == TipoMovimentacao.SAIDA) {
-            boolean sucesso = produto.removerEstoque(quantidade);
-            if (!sucesso) {
-                throw new IllegalArgumentException("Estoque insuficiente para saída.");
-            }
-        }
     }
 
 }

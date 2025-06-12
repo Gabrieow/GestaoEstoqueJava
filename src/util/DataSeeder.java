@@ -10,27 +10,37 @@ public class DataSeeder {
 
     public static void popularDadosIniciais(FornecedorController fornecedorController, ProdutoController produtoController) {
         try {
-            fornecedorController.registrarFornecedor(
-                "Tech Distribuidora", "11999999999", "Rua A, 123", 1, "12345678000101", "Tech Distribuidora LTDA");
+            if (fornecedorController.listarFornecedores().isEmpty()) {
 
-            fornecedorController.registrarFornecedor(
-                "Alpha Suprimentos", "11888888888", "Avenida B, 456", 2, "98765432000109", "Alpha Suprimentos SA");
+                fornecedorController.registrarFornecedor(
+                    "Tech Distribuidora", "11999999999", "Rua A, 123", 1, "12345678000101", "Tech Distribuidora LTDA");
 
-            Fornecedor f1 = fornecedorController.listarFornecedores().get(0);
-            Fornecedor f2 = fornecedorController.listarFornecedores().get(1);
+                fornecedorController.registrarFornecedor(
+                    "Alpha Suprimentos", "11888888888", "Avenida B, 456", 2, "98765432000109", "Alpha Suprimentos SA");
+            }
 
-            Produto p1 = ProdutoFactory.criarProduto(
-                1, "Teclado Mecânico", "Teclado com RGB e switches azuis", 249.90, "Periféricos", 50, f1);
+            if (produtoController.listarProdutos().isEmpty()) {
 
-            Produto p2 = ProdutoFactory.criarProduto(
-                2, "Mouse Gamer", "Mouse com sensor óptico de alta precisão", 179.00, "Periféricos", 30, f1);
+                Fornecedor f1 = fornecedorController.buscarFornecedorPorId(1);
+                Fornecedor f2 = fornecedorController.buscarFornecedorPorId(2);
 
-            Produto p3 = ProdutoFactory.criarProduto(
-                3, "Monitor Full HD", "Monitor 24'' com resolução 1080p", 799.99, "Monitores", 20, f2);
+                if (f1 != null && f2 != null) {
+                    Produto p1 = ProdutoFactory.criarProduto(
+                        1, "Teclado Mecânico", "Teclado com RGB e switches azuis", 249.90, "Periféricos", 50, f1);
 
-            produtoController.cadastrarProduto(p1);
-            produtoController.cadastrarProduto(p2);
-            produtoController.cadastrarProduto(p3);
+                    Produto p2 = ProdutoFactory.criarProduto(
+                        2, "Mouse Gamer", "Mouse com sensor óptico de alta precisão", 179.00, "Periféricos", 30, f1);
+
+                    Produto p3 = ProdutoFactory.criarProduto(
+                        3, "Monitor Full HD", "Monitor 24'' com resolução 1080p", 799.99, "Monitores", 20, f2);
+
+                    produtoController.cadastrarProduto(p1);
+                    produtoController.cadastrarProduto(p2);
+                    produtoController.cadastrarProduto(p3);
+                } else {
+                    System.err.println("Fornecedores iniciais não encontrados para popular produtos. Verifique o DataSeeder.");
+                }
+            }
 
         } catch (Exception e) {
             System.err.println("Erro ao popular dados iniciais: " + e.getMessage());

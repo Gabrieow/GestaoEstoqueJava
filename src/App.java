@@ -1,26 +1,25 @@
+// GABRIEL HENRIQUE VAZ DOS SANTOS | RGM 37340611
+// EDSON VALERIO VELOSO | RGM 38014335
+// CAEL DAVID SOARES DA COSTA | RGM 38625253 
+// VINICIUS MULLING | RGM 37996622
+// ANDERSON TORRES JUNIOR | RGM 37108182
+
 import controller.FornecedorController;
 import controller.MovimentacaoController;
 import controller.ProdutoController;
-import model.Fornecedor;
-import model.Produto;
 import view.FornecedorView;
 import view.MovimentacaoView;
 import view.ProdutoView;
 import util.DataSeeder;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
 
-        List<Fornecedor> fornecedores = new ArrayList<>();
-        List<Produto> produtos = new ArrayList<>();
-
-        FornecedorController fornecedorController = new FornecedorController(fornecedores); // fazer dao pra fornecedor e produto pra nao precisar instanciar as arraylist ali em cima
-        ProdutoController produtoController = new ProdutoController(produtos);
-        MovimentacaoController movimentacaoController = new MovimentacaoController();
+        FornecedorController fornecedorController = new FornecedorController();
+        ProdutoController produtoController = new ProdutoController();
+        MovimentacaoController movimentacaoController = new MovimentacaoController(produtoController); 
 
         DataSeeder.popularDadosIniciais(fornecedorController, produtoController);
 
